@@ -11,26 +11,26 @@ public class Waiter {
     private String id;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinColumn(name = "Waiter")
-    private List<Order> listOfOrders;
+    private List<RestaurantOrder> listOfRestaurantOrders;
 
 
 
     public Waiter() {
         this.id = UUID.randomUUID().toString();
-        this.listOfOrders = new ArrayList<>();
+        this.listOfRestaurantOrders = new ArrayList<>();
     }
 
     public void addOrder(String orderDetails, String table, double price) {
         warningWhenLessThanZero(price);
-        listOfOrders.add(new Order(orderDetails, table, price));
+        listOfRestaurantOrders.add(new RestaurantOrder(orderDetails, table, price));
     }
 
     public void endOrder(String idOrder) {
-        for (Order order : listOfOrders
+        for (RestaurantOrder restaurantOrder : listOfRestaurantOrders
         ) {
-            if (order.isIdEquals(idOrder)) {
-                listOfOrders.remove(order);
-                order.finishOrder();
+            if (restaurantOrder.isIdEquals(idOrder)) {
+                listOfRestaurantOrders.remove(restaurantOrder);
+                restaurantOrder.finishOrder();
                 return;
             }
 
@@ -43,13 +43,13 @@ public class Waiter {
     }
 
     boolean checkOrderListSize(int size) {
-        return listOfOrders.size() == size;
+        return listOfRestaurantOrders.size() == size;
     }
 
     boolean checkOrderDetails(String orderDetails) {
-        for (int i = 0; i < listOfOrders.size(); i++) {
-            Order order = listOfOrders.get(i);
-            if (order.isDetailsEquals(orderDetails)) {
+        for (int i = 0; i < listOfRestaurantOrders.size(); i++) {
+            RestaurantOrder restaurantOrder = listOfRestaurantOrders.get(i);
+            if (restaurantOrder.isDetailsEquals(orderDetails)) {
                 return true;
             }
 
@@ -58,6 +58,6 @@ public class Waiter {
     }
 
     boolean checkOrderDetails2(String orderDetails) {
-        return listOfOrders.stream().anyMatch(order -> order.isDetailsEquals(orderDetails));
+        return listOfRestaurantOrders.stream().anyMatch(restaurantOrder -> restaurantOrder.isDetailsEquals(orderDetails));
     }
 }

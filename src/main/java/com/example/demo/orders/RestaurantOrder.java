@@ -1,20 +1,19 @@
 package com.example.demo.orders;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.UUID;
 @Entity
-class Order {
+class RestaurantOrder {
     @Id
     private  String id;
     private  String orderDetails;
+    @Column(name = "RestaurantTable")
     private  String table;
     private  double price;
     private OrderStatus status;
 
-    private Order(){}
-    Order(String orderDetails, String table, double price) {
+    private RestaurantOrder(){}
+    RestaurantOrder(String orderDetails, String table, double price) {
         this.id = UUID.randomUUID().toString();
         this.orderDetails = orderDetails;
         this.table = table;
