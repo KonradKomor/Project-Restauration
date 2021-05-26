@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class WaiterTest {
     @Test
-    void test() {
+    void test0() {
         //given
-        Waiter waiter = new Waiter();
+        Waiter waiter = new Waiter("1");
         //when
-        waiter.addOrder("Lasagne", "2", 25);
+        waiter.addOrder("1","Lasagne", "2", 25);
         //then
         assertEquals(true, waiter.checkOrderListSize(1));
     }
@@ -18,23 +18,34 @@ class WaiterTest {
     @Test
     void test1() {
         //given
-        Waiter waiter = new Waiter();
+        Waiter waiter = new Waiter("1");
         //when
-        waiter.addOrder("Lasagne", "2", 25);
+        waiter.addOrder("1","Lasagne", "2", 25);
         //then
-        assertEquals(true, waiter.checkOrderDetails2("Lasagne"));
+        assertEquals(true, waiter.checkOrderDetails("Lasagne"));
 
     }
 
     @Test
     void test2() {
         //given
-        Waiter waiter = new Waiter();
+        Waiter waiter = new Waiter("1");
         //then
         RuntimeException exception = assertThrows(RuntimeException.class,
-                () -> waiter.addOrder("Lasagne", "2", -25));
-       assertEquals(RuntimeException.class,exception.getClass());
-       assertEquals("Price cant be lower than 0",exception.getMessage());
+                () -> waiter.addOrder("1","Lasagne", "2", -25));
+        assertEquals(RuntimeException.class, exception.getClass());
+        assertEquals("Price cant be lower than 0", exception.getMessage());
 
+    }
+
+    @Test
+    void test3() {
+        Waiter waiter = new Waiter("1");
+        waiter.addOrder("1","Lasagne", "2", 25);
+
+        waiter.endOrder("1");
+
+
+        assertTrue(waiter.checkOrderListSize(0));
     }
 }

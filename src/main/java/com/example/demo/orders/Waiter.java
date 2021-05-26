@@ -9,20 +9,22 @@ import java.util.UUID;
 public class Waiter {
     @Id
     private String id;
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "Waiter")
     private List<RestaurantOrder> listOfRestaurantOrders;
 
 
+    private Waiter() {
+    }
 
-    public Waiter() {
-        this.id = UUID.randomUUID().toString();
+    public Waiter(String id) {
+        this.id = id;
         this.listOfRestaurantOrders = new ArrayList<>();
     }
 
-    public void addOrder(String orderDetails, String table, double price) {
+    public void addOrder(String id, String orderDetails, String table, double price) {
         warningWhenLessThanZero(price);
-        listOfRestaurantOrders.add(new RestaurantOrder(orderDetails, table, price));
+        listOfRestaurantOrders.add(new RestaurantOrder(id, orderDetails, table, price));
     }
 
     public void endOrder(String idOrder) {
@@ -56,6 +58,7 @@ public class Waiter {
         }
         return false;
     }
+
 
     boolean checkOrderDetails2(String orderDetails) {
         return listOfRestaurantOrders.stream().anyMatch(restaurantOrder -> restaurantOrder.isDetailsEquals(orderDetails));
