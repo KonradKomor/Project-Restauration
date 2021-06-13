@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.finder.FindOrderDto;
+import com.example.demo.finder.OrdersFinder;
 import com.example.demo.orders.Waiter;
 import com.example.demo.orders.WaiterRepository;
 import org.slf4j.Logger;
@@ -7,13 +9,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class Controller {
     private static final Logger logger = LoggerFactory.getLogger(Controller.class);
     private final WaiterRepository repository;
-
-    Controller(final WaiterRepository repository) {
+    private final OrdersFinder finder;
+    Controller(final WaiterRepository repository,OrdersFinder finder) {
         this.repository = repository;
+        this.finder=finder;
     }
 
     @PostMapping("/create")
@@ -35,5 +40,10 @@ public class Controller {
         waiter.endOrder(ido);
         return ResponseEntity.ok(repository.save(waiter));
     }
+
+
+@GetMapping("/orders/getall")
+    List<FindOrderDto>getAllOrders(){return finder.getAllOrders();}
+
 }
 

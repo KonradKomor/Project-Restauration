@@ -1,5 +1,7 @@
 package com.example.demo.orders;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,9 @@ public class Waiter {
             }
 
         }
+    }
+    public void showOrders(){
+
     }
 
     private void warningWhenLessThanZero(double price) {

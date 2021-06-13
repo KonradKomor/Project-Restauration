@@ -28,7 +28,7 @@ class RestaurantOrder {
     }
 
     boolean isIdEquals(String id) {
-        return this.id == id;
+        return this.id.equals(id);
     }
 
     void finishOrder() {

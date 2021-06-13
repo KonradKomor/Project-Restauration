@@ -44,8 +44,6 @@ class WaiterTest {
         waiter.addOrder("1","Lasagne", "2", 25);
 
         waiter.endOrder("1");
-
-
         assertTrue(waiter.checkOrderListSize(0));
     }
 }
